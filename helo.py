@@ -11,8 +11,10 @@ def choose(a, b):
         print(b)
 
 def main():
-    choose("lo", "lofasz")
-    choose("kutya", "macska")
+    file = open("entries.txt", encoding="utf8", errors="ignore")
+    fasz = file.readline().strip() 
+    print(fasz) 
+
 
 if __name__ == "__main__": 
     main()
