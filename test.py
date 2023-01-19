@@ -46,6 +46,15 @@ class TestStringMethods(unittest.TestCase):
         winner = helo.game(partics, choose_smaller)
         self.assertEqual(winner, "d")
 
+    def test_is_pow2(self):
+
+        self.assertTrue(helo.is_pow2(4))
+        self.assertFalse(helo.is_pow2(3))
+        self.assertFalse(helo.is_pow2(70))
+        self.assertFalse(helo.is_pow2(63))
+
+
+        
 
 
 if __name__ == '__main__':

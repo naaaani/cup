@@ -1,5 +1,13 @@
 #!/usr/bin/python3
 import sys
+import math
+ 
+def log2(x):
+    return math.log10(x) / math.log10(2)
+
+def is_pow2(x):
+    y = log2(x)
+    return y == int(y)
 
 def main():
 
@@ -12,12 +20,18 @@ def main():
     members = file.read().splitlines()
     file.close()
 
-    winner = game(members, fake_choose)
+    winner = game(members, choose)
     print("Nyert:", winner)
+
+def normalize(members):
+    #TODO: implement normalize
+    return members
 
 def game(actuals, chooser):
 
     assert(len(actuals) > 0)
+    actuals = normalize(actuals)
+    assert(is_pow2(len(actuals)))
 
     while True:
         if len(actuals) == 1:
