@@ -1,10 +1,21 @@
 #!/usr/bin/python3
+import sys
 
 def main():
 
-    file = open("entries.txt", encoding="utf-8", errors="ignore")
-    actuals = file.read().splitlines()
+    if len(sys.argv) < 2:
+        print("specify file")
+        quit()
+    fnam = sys.argv[1]
+    file = open(fnam, encoding="utf-8", errors="ignore")
+
+    members = file.read().splitlines()
     file.close()
+
+    winner = game(members)
+    print("Nyert:", winner)
+
+def game(actuals):
 
     while True:
         nexts = perform_round(actuals)
@@ -13,7 +24,7 @@ def main():
         else:
             actuals = nexts
 
-    print(nexts[0])
+    return nexts[0]
 
 def choose(a, b):
 
