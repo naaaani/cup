@@ -12,13 +12,15 @@ def main():
     members = file.read().splitlines()
     file.close()
 
-    winner = game(members)
+    winner = game(members, fake_choose)
     print("Nyert:", winner)
 
-def game(actuals):
+def game(actuals, chooser):
+
+    assert(len(actuals) > 0)
 
     while True:
-        nexts = perform_round(actuals)
+        nexts = perform_round(actuals, chooser)
         if len(nexts) == 1:
             break
         else:
@@ -47,14 +49,14 @@ def choose(a, b):
 def fake_choose(p1, p2):
     return p1
     
-def perform_round(parties):
+def perform_round(parties, chooser):
 
     round_winners = []
     for match_num in range(int(len(parties) / 2)):
 
         p1 = parties[int(match_num * 2)]
         p2 = parties[int(match_num * 2 + 1)]
-        winner = choose(p1, p2)
+        winner = chooser(p1, p2)
 
         if winner is None:
             print("Aborted")
@@ -63,9 +65,6 @@ def perform_round(parties):
         round_winners.append(winner)
         
     return round_winners
-
-
-
 
 
 if __name__ == "__main__": 
