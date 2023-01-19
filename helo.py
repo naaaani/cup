@@ -9,6 +9,14 @@ def is_pow2(x):
     y = log2(x)
     return y == int(y)
 
+def round_up_to_pow2(x):
+
+    power = 1
+    while power < x:
+        power = power * 2
+
+    return power
+
 def main():
 
     if len(sys.argv) < 2:
@@ -24,8 +32,23 @@ def main():
     print("Nyert:", winner)
 
 def normalize(members):
-    #TODO: implement normalize
-    return members
+
+    if is_pow2(len(members)):
+        return members
+    
+    input_len = len(members)
+    result_len = round_up_to_pow2(len(members))
+    ext_len = result_len - input_len
+    splitpoint = input_len - ext_len
+
+    result = []
+    for i in range(0, splitpoint):
+        result.append(members[i])
+    for i in range(splitpoint,input_len):
+        result.append(members[i])
+        result.append(None)
+
+    return result
 
 def game(actuals, chooser):
 

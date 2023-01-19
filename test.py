@@ -53,8 +53,43 @@ class TestStringMethods(unittest.TestCase):
         self.assertFalse(helo.is_pow2(70))
         self.assertFalse(helo.is_pow2(63))
 
+    def test_normalize_4_to_4(self):
 
-        
+        input = [1, 2, 3, 4]
+
+        output = helo.normalize(input)
+
+        ref = [1, 2, 3, 4]        
+        self.assertEqual(output,ref)
+    
+   
+    def test_normalize_3_to_4(self):
+
+        input = [1, 2, 3]
+
+        output = helo.normalize(input)
+
+        ref = [1, 2, 3, None]        
+        self.assertEqual(output,ref)
+
+    def test_normalize_6_to_8(self):
+
+        input = [1, 2, 3, 4, 5, 6]
+
+        output = helo.normalize(input)
+
+        ref = [1, 2, 3, 4, 5, None, 6, None]        
+        self.assertEqual(output,ref)
+
+    def test_round_to_pow2(self):
+
+        self.assertEqual(helo.round_up_to_pow2(1), 1)
+        self.assertEqual(helo.round_up_to_pow2(2), 2)
+        self.assertEqual(helo.round_up_to_pow2(3), 4)
+        self.assertEqual(helo.round_up_to_pow2(63), 64)
+        self.assertEqual(helo.round_up_to_pow2(64), 64)
+        self.assertEqual(helo.round_up_to_pow2(65), 128)
+
 
 
 if __name__ == '__main__':
