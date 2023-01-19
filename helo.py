@@ -46,8 +46,7 @@ def choose(a, b):
         print("a vagy b")
     
 
-def fake_choose(p1, p2):
-    return p1
+
     
 def perform_round(parties, chooser):
 
