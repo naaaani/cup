@@ -40,6 +40,13 @@ class TestStringMethods(unittest.TestCase):
         with self.assertRaises(AssertionError):
             helo.game(partics, choose_smaller)
 
+    def test_game_only1(self):
+
+        partics = ["d"]
+        winner = helo.game(partics, choose_smaller)
+        self.assertEqual(winner, "d")
+
+
 
 if __name__ == '__main__':
     unittest.main()

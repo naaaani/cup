@@ -20,13 +20,12 @@ def game(actuals, chooser):
     assert(len(actuals) > 0)
 
     while True:
-        nexts = perform_round(actuals, chooser)
-        if len(nexts) == 1:
+        if len(actuals) == 1:
             break
         else:
-            actuals = nexts
+            actuals = perform_round(actuals, chooser)
 
-    return nexts[0]
+    return actuals[0]
 
 def choose(a, b):
 
