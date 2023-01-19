@@ -2,3 +2,4 @@ ló
 kutya
 macska
 elefant
+gyík

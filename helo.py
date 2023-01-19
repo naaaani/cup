@@ -91,7 +91,10 @@ def perform_round(parties, chooser):
 
         p1 = parties[int(match_num * 2)]
         p2 = parties[int(match_num * 2 + 1)]
-        winner = chooser(p1, p2)
+        if p2 is None:
+            winner = p1
+        else:    
+            winner = chooser(p1, p2)
 
         if winner is None:
             print("Aborted")
