@@ -2,6 +2,10 @@
 import sys
 import math
  
+def game_winner(game_result):
+    winner = game_result[len(game_result) - 1][0]
+    return winner
+
 def log2(x):
     return math.log10(x) / math.log10(2)
 
@@ -28,7 +32,8 @@ def main():
     members = file.read().splitlines()
     file.close()
 
-    winner = game(members, choose)
+    res = game(members, choose)
+    winner = game_winner(res)
     print("Nyert:", winner)
 
 def normalize(members):
@@ -55,14 +60,16 @@ def game(actuals, chooser):
     assert(len(actuals) > 0)
     actuals = normalize(actuals)
     assert(is_pow2(len(actuals)))
+    results = []
 
     while True:
+        results.append(actuals)
         if len(actuals) == 1:
             break
         else:
             actuals = perform_round(actuals, chooser)
 
-    return actuals[0]
+    return results
 
 def choose(a, b):
 
@@ -97,6 +104,7 @@ def perform_round(parties, chooser):
             winner = chooser(p1, p2)
 
         if winner is None:
+
             print("Aborted")
             quit()
 

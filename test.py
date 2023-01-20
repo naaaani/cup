@@ -19,20 +19,21 @@ class TestStringMethods(unittest.TestCase):
     def test_game_first(self):
 
         partics = ["a", "b", "c", "d"]
-        winner = helo.game(partics, choose_first)
+        game_result = helo.game(partics, choose_first)
+        winner = helo.game_winner(game_result)
         self.assertEqual(winner, "a")
 
     def test_game_smaller1(self):
 
         partics = ["d", "b", "c", "f"]
-        winner = helo.game(partics, choose_smaller)
-        self.assertEqual(winner, "b")
+        game_result = helo.game(partics, choose_smaller)
+        self.assertEqual(helo.game_winner(game_result), "b")
 
     def test_game_smaller2(self):
 
         partics = ["d", "b", "c", "a"]
-        winner = helo.game(partics, choose_smaller)
-        self.assertEqual(winner, "a")
+        game_result = helo.game(partics, choose_smaller)
+        self.assertEqual(helo.game_winner(game_result), "a")
 
     def test_game_empty(self):
 
@@ -43,12 +44,15 @@ class TestStringMethods(unittest.TestCase):
     def test_game_only1(self):
 
         partics = ["d"]
-        winner = helo.game(partics, choose_smaller)
-        self.assertEqual(winner, "d")
+        game_result = helo.game(partics, choose_smaller)
+        self.assertEqual(helo.game_winner(game_result), "d")
 
     def test_is_pow2(self):
 
-        self.assertTrue(helo.is_pow2(4))
+        v = 4
+        is_p2 = helo.is_pow2(v)
+        self.assertTrue(is_p2)
+
         self.assertFalse(helo.is_pow2(3))
         self.assertFalse(helo.is_pow2(70))
         self.assertFalse(helo.is_pow2(63))
@@ -89,6 +93,25 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(helo.round_up_to_pow2(63), 64)
         self.assertEqual(helo.round_up_to_pow2(64), 64)
         self.assertEqual(helo.round_up_to_pow2(65), 128)
+
+    def test_game_res_to_win_1(self):
+
+        gr = [["a", "b", 'c', 'd'], ["a", 'd'], ["d"]]
+        winner = helo.game_winner(gr)
+        self.assertEqual(winner, "d")
+
+    def test_game_res_to_win_2(self):
+
+        gr = [["a"]] 
+        winner = helo.game_winner(gr)
+        self.assertEqual(winner, "a")
+
+    def test_game_result(self):
+
+        partics = ["a", "b", "c"]
+        game_result = helo.game(partics, choose_smaller)
+        ref = [["a", "b", 'c', None], ["a", "c"], ["a"]]
+        self.assertEqual(game_result, ref)
 
 
 
