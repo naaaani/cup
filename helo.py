@@ -4,6 +4,12 @@ import math
 import tempfile
 import pydot
 from subprocess import check_call
+from math import floor
+
+def quote(value):
+    value = str(value)
+    value = "\"" + value + "\""
+    return value
  
 def game_winner(game_result):
     winner = game_result[len(game_result) - 1][0]
@@ -34,8 +40,8 @@ def main():
 
     members = file.read().splitlines()
     file.close()
-
-    res = game(members, choose)
+#TODO exchange back to choose
+    res = game(members, choose_first)
     winner = game_winner(res)
     print("Nyert:", winner)
     draw_graph(res)
@@ -115,9 +121,8 @@ def perform_round(parties, chooser):
 
 def draw_graph(game_result):
 
-    script = "digraph { a -> b }"
-    fnam = create_graph_image(script)
-    print(fnam)
+    script = render_graph(game_result)
+    create_graph_image(script)
 
 def create_graph_image(script):
 
@@ -130,8 +135,59 @@ def create_graph_image(script):
     check_call(["dot", '-Tpng', script_name, "-o", image_name])
     check_call(["eog", image_name])
 
+def render_graph(game_result):
+
+    r = "digraph {\n"
+    r += "rankdir = LR;\n"
+    r += "edge [arrowhead=none];\n"
+    r += "node [shape=box];\n\n"
+  
+    for ri in range(len(game_result)):
+        round_data = game_result[ri]
+
+        for pi in range(len(round_data)):
+            player_data = round_data[pi]
+            if player_data is None:
+                continue
+            r += "r" + str(ri) + "p" + str(pi)
+            r += " ["
+            r += "label = " + quote(player_data)
+            r += "];"
+            r += "\n" 
+
+        r += "{rank = same;"
+        for pi in range(len(round_data)):
+            player_data = round_data[pi]
+            if player_data is None:
+                continue
+            r += " r" + str(ri) + "p" + str(pi)
+            r += ";"
+        r += "}"
+        
+        if len(round_data) != 1:    
+            for pi in range(len(round_data)):
+                player_data = round_data[pi]
+                if player_data is None:
+                    continue
+                r += "r" + str(ri) + "p" + str(pi)
+                r += " -> "
+                r += "r" + str(ri + 1)
+                r += "p" + str(floor(pi / 2)) 
+                r += "\n"
+            
+        r += "\n"
 
 
+    print(r)
+    #quit()
+    r += '}'
+
+
+
+    return r
+
+def choose_first(p1, p2):
+    return p1
 
 
 if __name__ == "__main__": 

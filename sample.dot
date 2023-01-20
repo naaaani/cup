@@ -1,7 +1,7 @@
 digraph { 
-    rankdir = LR;
-    edge [arrowhead=none];
-    node [shape=box];
+rankdir = LR;
+edge [arrowhead=none];
+node [shape=box];
  
 r0i0 [label = "ló"]; 
 r0i1 [label = "macska"] 
