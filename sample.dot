@@ -2,11 +2,34 @@ digraph {
     rankdir = LR;
     edge [arrowhead=none];
     node [shape=box];
+ 
+r0i0 [label = "ló"]; 
+r0i1 [label = "macska"] 
+r0i2 [label = "szamár"]
+r0i3 [color = white label=""]
 
-    a [label="lófasz" shape=diamond]
+{rank = same;
+r0i0 r0i1 r0i2 r0i3
+}
 
-    a -> b;
-    c -> d [arrowhead=box];
-    a -> d;
-    {rank = same; b; c; d;}
+r0i0 -> r1i0
+r0i1 -> r1i0
+r0i2 -> r1i1
+r0i3 -> r1i1 [color=white]
+
+{rank = same;
+r1i0 r1i1
+}
+
+r1i0 [label = "ló"]; 
+r1i1 [label = "szamár"]
+
+r1i0 -> r2i0
+r1i1 -> r2i0
+
+
+r2i0 [label = "ló"]
+
+
+    
 }
