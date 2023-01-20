@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 import sys
 import math
+import tempfile
+import pydot
+from subprocess import check_call
  
 def game_winner(game_result):
     winner = game_result[len(game_result) - 1][0]
@@ -35,6 +38,7 @@ def main():
     res = game(members, choose)
     winner = game_winner(res)
     print("Nyert:", winner)
+    draw_graph(res)
 
 def normalize(members):
 
@@ -88,9 +92,6 @@ def choose(a, b):
             return None
         print("a vagy b")
     
-
-
-    
 def perform_round(parties, chooser):
 
     round_winners = []
@@ -111,6 +112,26 @@ def perform_round(parties, chooser):
         round_winners.append(winner)
         
     return round_winners
+
+def draw_graph(game_result):
+
+    script = "digraph { a -> b }"
+    fnam = create_graph_image(script)
+    print(fnam)
+
+def create_graph_image(script):
+
+    script_name = "/tmp/graph.dot"
+    image_name = "/tmp/graph.png"
+    file = open(script_name, "w")
+    file.write(script)
+    file.close()
+
+    check_call(["dot", '-Tpng', script_name, "-o", image_name])
+    check_call(["eog", image_name])
+
+
+
 
 
 if __name__ == "__main__": 
