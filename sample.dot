@@ -1,0 +1,12 @@
+digraph { 
+    rankdir = LR;
+    edge [arrowhead=none];
+    node [shape=box];
+
+    a [label="lófasz" shape=diamond]
+
+    a -> b;
+    c -> d [arrowhead=box];
+    a -> d;
+    {rank = same; b; c; d;}
+}
