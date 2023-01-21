@@ -2,7 +2,6 @@
 import sys
 import math
 import tempfile
-import pydot
 from subprocess import check_call
 from math import floor
 
