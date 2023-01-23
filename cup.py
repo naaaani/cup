@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import sys
 import math
-import tempfile
 from subprocess import check_call
 from math import floor
 
@@ -39,8 +38,8 @@ def main():
 
     members = file.read().splitlines()
     file.close()
-#TODO exchange back to choose
-    res = game(members, choose_first)
+    
+    res = game(members, choose)
     winner = game_winner(res)
     print("Nyert:", winner)
     draw_graph(res)
@@ -148,10 +147,7 @@ def render_graph(game_result):
         r += render_graph_ranks(round_data, ri)
         r += render_graph_edges(round_data, ri)
         r += "\n"
-
     
-    print(r)
-#    quit()
     r += '}'
 
     return r
