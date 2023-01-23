@@ -144,46 +144,67 @@ def render_graph(game_result):
     for ri in range(len(game_result)):
         round_data = game_result[ri]
 
-        for pi in range(len(round_data)):
-            player_data = round_data[pi]
-            if player_data is None:
-                continue
-            r += "r" + str(ri) + "p" + str(pi)
-            r += " ["
-            r += "label = " + quote(player_data)
-            r += "];"
-            r += "\n" 
-
-        r += "{rank = same;"
-        for pi in range(len(round_data)):
-            player_data = round_data[pi]
-            if player_data is None:
-                continue
-            r += " r" + str(ri) + "p" + str(pi)
-            r += ";"
-        r += "}"
-        
-        if len(round_data) != 1:    
-            for pi in range(len(round_data)):
-                player_data = round_data[pi]
-                if player_data is None:
-                    continue
-                r += "r" + str(ri) + "p" + str(pi)
-                r += " -> "
-                r += "r" + str(ri + 1)
-                r += "p" + str(floor(pi / 2)) 
-                r += "\n"
-            
+        r += render_graph_node(round_data, ri)
+        r += render_graph_ranks(round_data, ri)
+        r += render_graph_edges(round_data, ri)
         r += "\n"
 
-
+    
     print(r)
-    #quit()
+#    quit()
     r += '}'
 
+    return r
 
+def render_graph_node(round_data, ri):
+    
+    r = ""
+    for pi in range(len(round_data)):
+        player_data = round_data[pi]
+        if player_data is None:
+            continue
+        r += mk_node_id(ri, pi)
+        r += " ["
+        r += "label = " + quote(player_data)
+        r += "];"
+        r += "\n" 
+    
+    return r
+
+def render_graph_ranks(round_data, ri):
+    
+    r = "{rank = same;"
+    for pi in range(len(round_data)):
+        player_data = round_data[pi]
+        if player_data is None:
+            continue
+        r += mk_node_id(ri, pi)
+        r += ";"
+    r += "}\n"
 
     return r
+
+def render_graph_edges(round_data, ri):
+
+    r = ""
+
+    if len(round_data) != 1:    
+        for pi in range(len(round_data)):
+            player_data = round_data[pi]
+            if player_data is None:
+                continue
+            r += mk_node_id(ri, pi)
+            r += " -> "
+            r += mk_node_id(ri + 1, floor(pi / 2))
+            r += "\n"
+        
+    r += "\n"
+
+    return r
+
+def mk_node_id(round_ix, player_ix):
+    node_id = "r" + str(round_ix) + "p" + str(player_ix)
+    return node_id
 
 def choose_first(p1, p2):
     return p1
